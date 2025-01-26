@@ -1,7 +1,15 @@
+using FrontendReservacionCasas.Configurations;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var apiUrls = builder.Configuration.GetSection("ApiUrls").Get<ApiUrls>();
+
+builder.Services.AddSingleton(apiUrls);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
 
 var app = builder.Build();
 
