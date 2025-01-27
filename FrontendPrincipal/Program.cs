@@ -6,6 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Registrar servicios HTTP para consumir las APIs
+builder.Services.AddHttpClient<UsuariosService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiUrls:ReservacionCasasAPI"]);
+});
+
 builder.Services.AddHttpClient<ReservacionService>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ApiUrls:ReservacionCasasAPI"]);
@@ -40,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
 
 app.Run();

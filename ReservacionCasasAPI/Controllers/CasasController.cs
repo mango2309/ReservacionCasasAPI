@@ -5,7 +5,7 @@ using ReservacionCasasAPI.Models;
 
 namespace ReservacionCasasAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/casas")]
     [ApiController]
     public class CasasController : ControllerBase
     {

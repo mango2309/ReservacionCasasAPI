@@ -20,5 +20,32 @@ namespace FrontendPrincipal.Services
             var json = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Reservacion>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+        public async Task<List<Casa>> GetCasasAsync()
+        {
+            var response = await _httpClient.GetAsync("api/casas");  // Ruta para obtener las casas
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var casas = JsonSerializer.Deserialize<List<Casa>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return casas;
+            }
+            else
+            {
+                throw new Exception("No se pudieron obtener las casas.");
+            }
+        }
+
+        // Método para crear una nueva reserva
+        public async Task CrearReservaAsync(Reservacion reserva)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/reservaciones", reserva);  // Ruta para crear la reserva
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("No se pudo realizar la reserva.");
+            }
+        }
     }
 }

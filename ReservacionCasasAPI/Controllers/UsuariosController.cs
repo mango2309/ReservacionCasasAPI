@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReservacionCasasAPI.Data;
 using ReservacionCasasAPI.Models;
 
 namespace ReservacionCasasAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/usuarios")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
@@ -45,6 +46,33 @@ namespace ReservacionCasasAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetUsuario), new { id = usuario.IdUsuario }, usuario);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
+        {
+            // Buscar el usuario por el correo electrónico
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Email == loginRequest.Email);
+
+            // Verificar si el usuario existe y si la contraseña coincide
+            if (usuario == null || usuario.Password != loginRequest.Password)
+            {
+                return Unauthorized("Usuario o contraseña incorrectos.");
+            }
+
+            // Si el login es exitoso, puedes devolver algún tipo de respuesta
+            // como un mensaje de éxito y algunos detalles del usuario
+            return Ok(new
+            {
+                Message = "Inicio de sesión exitoso.",
+                Usuario = new
+                {
+                    usuario.IdUsuario,
+                    usuario.NombreCompleto,
+                    usuario.Email
+                }
+            });
         }
 
         // PUT: api/Usuarios/5
