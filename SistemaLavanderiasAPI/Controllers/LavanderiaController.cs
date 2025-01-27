@@ -5,7 +5,7 @@ using SistemaLavanderiasAPI.Models;
 
 namespace SistemaLavanderiasAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/lavanderias")]
     [ApiController]
     public class LavanderiaController : ControllerBase
     {

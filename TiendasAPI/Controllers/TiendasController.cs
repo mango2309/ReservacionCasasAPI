@@ -5,7 +5,7 @@ using TiendasAPI.Models;
 
 namespace TiendasAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/tiendas")]
     [ApiController]
     public class TiendasController : ControllerBase
     {

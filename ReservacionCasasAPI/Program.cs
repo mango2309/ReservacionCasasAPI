@@ -10,7 +10,20 @@ builder.Services.AddDbContext<ReservacionContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:7000") // Cambia al puerto HTTPS del frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
 
 // Configurar el middleware
 if (app.Environment.IsDevelopment())

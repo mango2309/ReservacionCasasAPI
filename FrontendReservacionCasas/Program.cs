@@ -1,23 +1,32 @@
-using FrontendReservacionCasas.Configurations;
+using FrontendReservacionCasas.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var apiUrls = builder.Configuration.GetSection("ApiUrls").Get<ApiUrls>();
-
-builder.Services.AddSingleton(apiUrls);
-
-// Add services to the container.
+// Agregar controladores con vistas
 builder.Services.AddControllersWithViews();
 
+// Registrar servicios HTTP para consumir las APIs
+builder.Services.AddHttpClient<ReservacionService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiUrls:ReservacionCasasAPI"]);
+});
 
+builder.Services.AddHttpClient<LavanderiaService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiUrls:SistemaLavanderiasAPI"]);
+});
+
+builder.Services.AddHttpClient<TiendaService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiUrls:TiendasAPI"]);
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar el pipeline de la aplicación
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

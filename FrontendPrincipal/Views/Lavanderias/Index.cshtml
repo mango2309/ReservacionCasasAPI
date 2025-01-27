@@ -1,0 +1,26 @@
+﻿@model List<Lavanderia>
+
+<h1>Lavanderías</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lavanderia in Model)
+        {
+            <tr>
+                <td>@lavanderia.IdLavanderia</td>
+                <td>@lavanderia.Nombre</td>
+                <td>@lavanderia.Ubicacion</td>
+                <td>@lavanderia.Telefono</td>
+                <td>@lavanderia.PrecioPorKg</td>
+            </tr>
+        }
+    </tbody>
+</table>

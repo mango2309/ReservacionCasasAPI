@@ -1,0 +1,26 @@
+﻿@using FrontendReservacionCasas.Models
+@model List<Reservacion>
+
+<h1>Reservaciones</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Cliente</th>
+            <th>Casa</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservacion in Model)
+        {
+            <tr>
+                <td>@reservacion.Id</td>
+                <td>@reservacion.IdUsuario</td>
+                <td>@reservacion.IdCasa</td>
+                @* <td>@reservacion.Fecha.ToString("yyyy-MM-dd")</td> *@
+            </tr>
+        }
+    </tbody>
+</table>

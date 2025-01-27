@@ -1,0 +1,26 @@
+﻿@using FrontendReservacionCasas.Models
+@model List<Tienda>
+
+<h1>Tiendas</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Ubicación</th>
+            <th>Contacto</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tienda in Model)
+        {
+            <tr>
+                <td>@tienda.IdTienda</td>
+                <td>@tienda.Nombre</td>
+                <td>@tienda.Ubicacion</td>
+                <td>@tienda.Contacto</td>
+            </tr>
+        }
+    </tbody>
+</table>
