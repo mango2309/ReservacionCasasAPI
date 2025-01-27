@@ -30,12 +30,20 @@ namespace FrontendPrincipal.Controllers
             {
                 var usuario = await _usuariosService.LoginAsync(email, password);
 
-                // Guardar el usuario en la sesión
-                HttpContext.Session.SetString("UserId", usuario.IdUsuario.ToString());
-                HttpContext.Session.SetString("UserEmail", usuario.Email);
+                if (usuario != null)
+                {
+                    // Guardar la información del usuario en la sesión
+                    HttpContext.Session.SetString("UserId", usuario.IdUsuario.ToString());
+                    HttpContext.Session.SetString("UserEmail", usuario.Email);
 
-                // Redirigir al usuario a la página de reservas
-                return RedirectToAction("Reservar", "Reservaciones");
+                    // Redirigir al Home (puedes personalizarlo)
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Credenciales inválidas. Inténtalo de nuevo.";
+                    return View();
+                }
             }
             catch (Exception ex)
             {

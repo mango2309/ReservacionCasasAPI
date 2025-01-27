@@ -17,11 +17,6 @@ namespace FrontendPrincipal.Controllers
         {
             return View();
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
         
     }
 }
