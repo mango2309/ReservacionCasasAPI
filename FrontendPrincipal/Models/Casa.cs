@@ -10,5 +10,6 @@ namespace FrontendPrincipal.Models
         public string Ubicacion { get; set; }
         public decimal Precios { get; set; }
         public string Descripcion { get; set; }
+        public string UrlImagen { get; set; }
     }
 }

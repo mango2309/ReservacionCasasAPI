@@ -29,6 +29,27 @@ namespace FrontendPrincipal.Services
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var casas = JsonSerializer.Deserialize<List<Casa>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                // Asignar imágenes manualmente basadas en algún criterio
+                foreach (var casa in casas)
+                {
+                    switch (casa.Nombre)
+                    {
+                        case "Casa de Jotade":
+                            casa.UrlImagen = "/images/csjtd.jpg";
+                            break;
+                        case "Casa Moderna":
+                            casa.UrlImagen = "/images/csmdr.jpg";
+                            break;
+                        case "Casa de Piedra":
+                            casa.UrlImagen = "/images/cspdr.jpg";
+                            break;
+                        case "Edificio Safiro":
+                            casa.UrlImagen = "/images/edfmdr.jpg";
+                            break;
+                    }
+                }
+
                 return casas;
             }
             else
@@ -36,6 +57,8 @@ namespace FrontendPrincipal.Services
                 throw new Exception("No se pudieron obtener las casas.");
             }
         }
+
+
 
         // Método para crear una nueva reserva
         public async Task CrearReservaAsync(Reservacion reserva)
