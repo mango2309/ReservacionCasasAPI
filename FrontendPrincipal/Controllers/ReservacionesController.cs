@@ -36,11 +36,13 @@ namespace FrontendPrincipal.Controllers
 
             await _reservacionService.CrearReservaAsync(reserva);  // Llamar al servicio para registrar la reserva
 
-            return RedirectToAction("ConfirmarReserva", new { idCasa }); // Redirigir a la página de confirmación
+            TempData["SuccessMessage"] = "¡Su reserva ha sido confirmada exitosamente!";
+
+            return RedirectToAction("ConfirmarReserva", new { idCasa, fechaInicio, fechaFin }); // Redirigir a la página de confirmación
         }
 
         // Vista de confirmación de reserva
-        public async Task<IActionResult> ConfirmarReserva(int idCasa)
+        public async Task<IActionResult> ConfirmarReserva(int idCasa, DateTime fechaInicio, DateTime fechaFin)
         {
             // Obtener los detalles de la casa seleccionada desde el servicio
             var casa = await _reservacionService.GetCasaByIdAsync(idCasa);
@@ -49,6 +51,9 @@ namespace FrontendPrincipal.Controllers
             {
                 return NotFound("La casa seleccionada no existe.");
             }
+
+            ViewData["fechaInicio"] = fechaInicio.ToString("yyyy-MM-dd"); // Aseguramos el formato de fecha
+            ViewData["fechaFin"] = fechaFin.ToString("yyyy-MM-dd");
 
             return View(casa);  // Mostrar confirmación
         }

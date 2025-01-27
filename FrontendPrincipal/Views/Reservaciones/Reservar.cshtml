@@ -22,9 +22,10 @@
                                 @casa.Descripcion
                             </p>
 
-                            <!-- Aquí utilizamos un formulario para hacer la reserva -->
-                            <form method="post" asp-action="RealizarReserva">
+                            <!-- Formulario para enviar las fechas -->
+                            <form asp-action="RealizarReserva" method="post">
                                 <input type="hidden" name="idCasa" value="@casa.IdCasa" />
+
                                 <label for="fechaInicio">Fecha de Inicio:</label>
                                 <input type="date" id="fechaInicio" name="fechaInicio" required class="form-control mb-2" />
 
