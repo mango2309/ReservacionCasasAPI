@@ -47,5 +47,19 @@ namespace FrontendPrincipal.Services
                 throw new Exception("No se pudo realizar la reserva.");
             }
         }
+
+        public async Task<Casa> GetCasaByIdAsync(int id)
+        {
+            var response = await _httpClient.GetAsync($"api/casas/{id}"); // Ruta para obtener la casa por ID
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<Casa>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            else
+            {
+                return null; // Si no existe la casa, devolvemos null
+            }
+        }
     }
 }

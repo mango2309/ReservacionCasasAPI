@@ -20,33 +20,37 @@ namespace FrontendPrincipal.Controllers
             return View(casas);  // Mostrar las casas en la vista
         }
 
-        // Acción para realizar la reserva
+        // Acción para reservar una casa
         [HttpPost]
         public async Task<IActionResult> RealizarReserva(int idCasa, DateTime fechaInicio, DateTime fechaFin)
         {
-            var userId = HttpContext.Session.GetString("UserId");
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Usuarios");
-            }
 
+            // Crear una nueva reserva con los datos proporcionados
             var reserva = new Reservacion
             {
-                IdUsuario = int.Parse(userId),
+                IdUsuario = 2, // Usar un ID de usuario fijo o manejarlo desde otra lógica
                 IdCasa = idCasa,
                 FechaInicio = fechaInicio,
                 FechaFin = fechaFin
             };
 
-            await _reservacionService.CrearReservaAsync(reserva);  // Llamar al servicio para crear la reserva
+            await _reservacionService.CrearReservaAsync(reserva);  // Llamar al servicio para registrar la reserva
 
-            return RedirectToAction("ConfirmacionReserva");
+            return RedirectToAction("ConfirmarReserva", new { idCasa }); // Redirigir a la página de confirmación
         }
 
         // Vista de confirmación de reserva
-        public IActionResult ConfirmacionReserva()
+        public async Task<IActionResult> ConfirmarReserva(int idCasa)
         {
-            return View();  // Mostrar confirmación
+            // Obtener los detalles de la casa seleccionada desde el servicio
+            var casa = await _reservacionService.GetCasaByIdAsync(idCasa);
+
+            if (casa == null)
+            {
+                return NotFound("La casa seleccionada no existe.");
+            }
+
+            return View(casa);  // Mostrar confirmación
         }
 
     }
