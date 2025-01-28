@@ -14,7 +14,7 @@ namespace FrontendPrincipal.Services
 
         public async Task<List<Reservacion>> GetReservacionesAsync()
         {
-            var response = await _httpClient.GetAsync("api/reservaciones"); // Ruta de tu API
+            var response = await _httpClient.GetAsync("api/reservaciones"); 
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
@@ -23,14 +23,13 @@ namespace FrontendPrincipal.Services
 
         public async Task<List<Casa>> GetCasasAsync()
         {
-            var response = await _httpClient.GetAsync("api/casas");  // Ruta para obtener las casas
+            var response = await _httpClient.GetAsync("api/casas");  
 
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var casas = JsonSerializer.Deserialize<List<Casa>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                // Asignar imágenes manualmente basadas en algún criterio
                 foreach (var casa in casas)
                 {
                     switch (casa.Nombre)
@@ -58,12 +57,9 @@ namespace FrontendPrincipal.Services
             }
         }
 
-
-
-        // Método para crear una nueva reserva
         public async Task CrearReservaAsync(Reservacion reserva)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/reservaciones", reserva);  // Ruta para crear la reserva
+            var response = await _httpClient.PostAsJsonAsync("api/reservaciones", reserva); 
 
             if (!response.IsSuccessStatusCode)
             {
@@ -73,7 +69,7 @@ namespace FrontendPrincipal.Services
 
         public async Task<Casa> GetCasaByIdAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"api/casas/{id}"); // Ruta para obtener la casa por ID
+            var response = await _httpClient.GetAsync($"api/casas/{id}"); 
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
